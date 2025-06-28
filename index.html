@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minh Vương & Châu Lộc</title>
+  <link rel="stylesheet" href="final_styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets\images\wedding\heart.png" />
+  <style>
+    .radio-group input[type="radio"] {
+      display: none;
+    }
+
+    .radio-group label {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.1em;
+      user-select: none;
+      padding: 0.4em 1.2em;
+      transition: color 0.2s;
+      z-index: 1;
+    }
+
+    .radio-group label span {
+      position: relative;
+      padding-left: 0;
+      z-index: 2;
+    }
+
+    .radio-group input[type="radio"]:checked + span {
+      color: #fff;
+      font-weight: bold;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0.4em 1.2em;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .radio-group input[type="radio"]:checked + span:before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 3.5em;
+      height: 3.5em;
+      z-index: -1;
+      background: url('data:image/svg+xml;utf8,<svg width="80" height="80" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g1" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="%23fff" stop-opacity="0.9"/><stop offset="60%" stop-color="%23e63946" stop-opacity="0.7"/><stop offset="100%" stop-color="%23a8323e" stop-opacity="1"/></radialGradient><linearGradient id="shine" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23fff" stop-opacity="0.8"/><stop offset="100%" stop-color="%23fff" stop-opacity="0"/></linearGradient></defs><path d="M24 44s-13.5-10.5-21-18C-2 18 0 7 12 7c5 0 9 3 12 7 3-4 7-7 12-7 12 0 14 11 9 19-7.5 7.5-21 18-21 18z" fill="url(%23g1)"/><ellipse cx="18" cy="18" rx="5" ry="2.5" fill="url(%23shine)"/></svg>') no-repeat center center;
+      background-size: contain;
+      filter: drop-shadow(0 0 16px #e63946cc) brightness(1.2);
+      animation: heart-pop 0.4s;
+    }
+
+    .radio-group input[type="radio"]:checked + span:after {
+      display: none !important;
+    }
+
+    @keyframes heart-pop {
+      0% { transform: scale(0.5) translate(-50%, -50%); opacity: 0; }
+      60% { transform: scale(1.2) translate(-50%, -50%); opacity: 1; }
+      100% { transform: scale(1) translate(-50%, -50%); opacity: 1; }
+    }
+
+    .land2-body-block {
+      position: relative;
+      overflow: visible;
+    }
+
+    /* TEST: Force form to be smaller on mobile */
+    @media (max-width: 768px) {
+      .form-bg-container {
+        width: 70vw !important;
+        max-width: 300px !important;
+        min-width: 150px !important;
+        transform: scale(0.8) !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-bg-container {
+        width: 80vw !important;
+        max-width: 250px !important;
+        min-width: 100px !important;
+        transform: scale(0.7) !important;
+      }
+    }
+
+    /* Specific fixes for 768x1364 */
+    @media (width: 768px) and (height: 1364px) {
+      .form-bg-container {
+        width: 75vw !important;
+        max-width: 450px !important;
+        min-width: 300px !important;
+        transform: scale(0.95) !important;
+      }
+      .rsvp-form {
+        font-size: clamp(16px, 2.5vw, 20px) !important;
+        padding: 2.5em 2em !important;
+      }
+    }
+
+    /* Specific fixes for 2560x1364 */
+    @media (width: 2560px) and (height: 1364px) {
+      .form-bg-container {
+        width: 40vw !important;
+        max-width: 800px !important;
+        min-width: 500px !important;
+        transform: scale(1.1) !important;
+      }
+      .rsvp-form {
+        font-size: clamp(18px, 1.5vw, 24px) !important;
+        padding: 3em 2.5em !important;
+      }
+    }
+
+    /* General fixes for ultra-wide screens */
+    @media (min-width: 2000px) {
+      .form-bg-container {
+        width: 45vw !important;
+        max-width: 900px !important;
+        min-width: 600px !important;
+      }
+      .rsvp-form {
+        font-size: clamp(20px, 1.2vw, 26px) !important;
+        padding: 3.5em 3em !important;
+      }
+    }
+
+    .top-block .element {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      z-index: 2;
+      animation: glow-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes glow-pulse {
+      0% {
+        filter: brightness(1.08);
+        transform: translateX(-50%) scale(1);
+      }
+      50% {
+        filter: brightness(1.18);
+        transform: translateX(-50%) scale(1.04);
+      }
+      100% {
+        filter: brightness(1.08);
+        transform: translateX(-50%) scale(1);
+      }
+    }
+
+    /* Hiệu ứng xuất hiện khi scroll đến */
+    .fade-in-img {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity 0.7s cubic-bezier(0.4,0.2,0.2,1), transform 0.7s cubic-bezier(0.4,0.2,0.2,1);
+      will-change: opacity, transform;
+    }
+    .fade-in-img.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .carousel-container.multi {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 100vw;
+      margin: 0 auto;
+      box-sizing: border-box;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .carousel-img.multi {
+      flex: 1 1 0;
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      height: auto;
+      margin: 0;
+      display: block;
+      box-sizing: border-box;
+      border-radius: 10px;
+      aspect-ratio: 3/4;
+    }
+
+    @media (max-width: 768px) {
+      .carousel-container.multi {
+        gap: 8px;
+      }
+      .carousel-img.multi {
+        border-radius: 10px;
+        aspect-ratio: 3/4;
+      }
+    }
+    @media (max-width: 480px) {
+      .carousel-container.multi {
+        gap: 4px;
+      }
+      .carousel-img.multi {
+        border-radius: 7px;
+        aspect-ratio: 1/1.2;
+      }
+    }
+
+    .land2-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Block Top -->
+  <div class="wedding-block top-block">
+    <img src="assets/images/wedding/element.png" alt="Top Decoration" class="element" />
+  </div>
+
+  <!-- Block Body -->
+  <div class="wedding-block body-block">
+    <div class="invitation-list">
+      <div class="invitation-wrapper">
+        <img src="assets/images/wedding/thiep-moi_1.png" alt="Invitation 1" class="invitation fade-in-img" />
+      </div>
+      <div class="invitation-wrapper">
+        <img src="assets/images/wedding/thiep-moi_2.png" alt="Invitation 2" class="invitation fade-in-img" />
+      </div>
+      <div class="invitation-wrapper">
+        <img src="assets/images/wedding/thiep-moi_3.png" alt="Invitation 3" class="invitation fade-in-img" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Block End -->
+  <div class="wedding-block end-block">
+    <div class="program-wrapper">
+      <img src="assets/images/wedding/chuong-trinh-tiec.png" alt="Chương trình tiệc" class="program-item fade-in-img" />
+    </div>
+    <div class="program-wrapper">
+      <img src="assets/images/wedding/don-khach.png" alt="Đón khách" class="program-item fade-in-img" />
+    </div>
+    <div class="program-wrapper">
+      <img src="assets/images/wedding/khai-tiec.png" alt="Khai tiệc" class="program-item fade-in-img" />
+    </div>
+    <div class="program-wrapper">
+      <img src="assets/images/wedding/dung-tiec.png" alt="Dừng tiệc" class="program-item fade-in-img" />
+    </div>
+  </div>
+
+  <!-- Land2 Top Block -->
+  <div class="wedding-block land2-top-block">
+    <img src="assets/images/wedding/land2-text_date.png" alt="Date Text" class="land2-date-top" />
+    <img src="assets/images/wedding/land2-text_place.png" alt="Place Text" class="land2-place-bottom" />
+    <div class="land2-content">
+    </div>
+  </div>
+
+  <!-- Land2 Body Block -->
+  <div class="wedding-block land2-body-block">
+    <div class="land2-content">
+      <img src="assets/images/wedding/land2-text_xacnhan.png" alt="Xác nhận Text" class="land2-xacnhan" />
+      <div class="form-bg-container">
+        <div class="form-bg-wrapper">
+          <form class="rsvp-form" id="rsvpForm">
+            <input type="text" id="name" name="name" required placeholder="Tên của bạn" />
+
+            <div class="form-group">
+              <div class="form-label">Bạn có thể tham dự buổi tiệc cùng gia đình chúng tôi vào 19/7/2025 - nhằm ngày 25/6/2025 Ất Tỵ</div>
+              <div class="radio-group">
+                <label>
+                  <input type="radio" name="attendance" value="Chắc chắn" required />
+                  <span>Chắc chắn</span>
+                </label>
+                <label>
+                  <input type="radio" name="attendance" value="Có thể" />
+                  <span>Có thể</span>
+                </label>
+                <label>
+                  <input type="radio" name="attendance" value="Không tham gia" />
+                  <span>Không tham gia</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">Bạn là khách mời của ai?</div>
+              <div class="radio-group">
+                <label>
+                  <input type="radio" name="side" value="Chú rể" required />
+                  <span>Chú rể</span>
+                </label>
+                <label>
+                  <input type="radio" name="side" value="Cô dâu" />
+                  <span>Cô dâu</span>
+                </label>
+              </div>
+            </div>
+
+            <textarea id="message" name="message" rows="3" placeholder="Gửi lời yêu thương..."></textarea>
+
+            <button type="submit">Gửi</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Land2 End Block -->
+  <div class="wedding-block land2-end-block">
+    <div class="land2-content">
+      <img src="assets/images/wedding/land2-text_save.png" alt="Save Text" class="land2-save" />
+      <div class="carousel-container multi">
+        <img class="carousel-img multi" src="assets/images/Save_date/_2WL1156.jpg" alt="Ảnh Save Date" />
+        <img class="carousel-img multi" src="assets/images/Save_date/_2WL1145.jpg" alt="Ảnh Save Date" />
+        <img class="carousel-img multi" src="assets/images/Save_date/_2WL1006.jpg" alt="Ảnh Save Date" />
+      </div>
+      <img src="assets/images/wedding/land2-text_tkyou.png" alt="Thank You Text" class="land2-thankyou" />
+    </div>
+  </div>
+
+  <div id="formResult"></div>
+
+  <script>
+  // Basic form functionality
+  function updateFallingHeartsHeight() {
+    const section = document.querySelector('.land2-body-block');
+    if (section) {
+      // Keep this function for potential future use
+    }
+  }
+  window.addEventListener('resize', updateFallingHeartsHeight);
+  window.addEventListener('DOMContentLoaded', updateFallingHeartsHeight);
+
+  // Hiệu ứng trái tim pop-up tại vị trí click/chạm
+  function createHeartAt(x, y) {
+    const heart = document.createElement('div');
+    heart.style.position = 'fixed';
+    heart.style.left = x + 'px';
+    heart.style.top = y + 'px';
+    heart.style.pointerEvents = 'none';
+    heart.style.zIndex = 9999;
+    heart.style.transform = 'translate(-50%, -50%) scale(0.5)';
+    heart.style.transition = 'transform 0.4s cubic-bezier(0.4,2,0.2,1), opacity 0.8s';
+    heart.style.opacity = '1';
+    heart.innerHTML = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="g1" cx="50%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#fff" stop-opacity="0.9"/>
+          <stop offset="60%" stop-color="#e63946" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#a8323e" stop-opacity="1"/>
+        </radialGradient>
+        <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#fff" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="M24 44s-13.5-10.5-21-18C-2 18 0 7 12 7c5 0 9 3 12 7 3-4 7-7 12-7 12 0 14 11 9 19-7.5 7.5-21 18-21 18z" fill="url(#g1)"/>
+      <ellipse cx="18" cy="18" rx="5" ry="2.5" fill="url(#shine)"/>
+    </svg>`;
+    document.body.appendChild(heart);
+    setTimeout(() => {
+      heart.style.transform = 'translate(-50%, -50%) scale(1.2)';
+    }, 10);
+    setTimeout(() => {
+      heart.style.opacity = '0';
+      heart.style.transform = 'translate(-50%, -50%) scale(1.5)';
+    }, 900);
+    setTimeout(() => {
+      heart.remove();
+    }, 1200);
+  }
+
+  function handleHeartPop(e) {
+    let x, y;
+    if (e.touches && e.touches.length > 0) {
+      x = e.touches[0].clientX;
+      y = e.touches[0].clientY;
+    } else {
+      x = e.clientX;
+      y = e.clientY;
+    }
+    createHeartAt(x, y);
+  }
+
+  document.addEventListener('click', handleHeartPop);
+  document.addEventListener('touchstart', handleHeartPop);
+
+  // Hiệu ứng xuất hiện khi scroll đến ảnh
+  document.addEventListener('DOMContentLoaded', function() {
+    const fadeImgs = document.querySelectorAll('.fade-in-img');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+    fadeImgs.forEach(img => observer.observe(img));
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const slideWrappers = document.querySelectorAll('.slide-in-from-left, .slide-in-from-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.01 });
+    slideWrappers.forEach(el => observer.observe(el));
+  });
+
+  // Carousel Save_date nhiều ảnh
+  const saveDateImages = [
+    '_2WL1156.jpg','_2WL1145.jpg','_2WL1006.jpg','_2WL0968.jpg','NDT02270.jpg','NDT02176.jpg','NDT01752.jpg','NDT01619.jpg','NDT01418.jpg','NDT01413.jpg','NDT01398.jpg','NDT01380.jpg','NDT01243.jpg','NDT01154.jpg','NDT01101.jpg','NDT00986.jpg','NDT00801.jpg','NDT00740.jpg','NDT00521.jpg','NDT00415.jpg','NDT00283_1.jpg','NDT00252.jpg','NDT00177.jpg','NDT00172.jpg','010.png','009.png','008.png','006.png','005.png','003.png'
+  ];
+  const carouselImgs = document.querySelectorAll('.carousel-img.multi');
+  let showingIdxs = [0, 1, 2];
+
+  function updateImgs() {
+    for (let i = 0; i < 3; i++) {
+      carouselImgs[i].src = `assets/images/Save_date/${saveDateImages[showingIdxs[i]]}`;
+    }
+  }
+  updateImgs();
+
+  function getRandomIdx(exclude) {
+    let available = saveDateImages.map((_, idx) => idx).filter(idx => !exclude.includes(idx));
+    if (available.length === 0) available = saveDateImages.map((_, idx) => idx);
+    return available[Math.floor(Math.random() * available.length)];
+  }
+
+  // Đổi từng ảnh với thời gian khác nhau
+  setInterval(() => {
+    const pos = 0;
+    showingIdxs[pos] = getRandomIdx(showingIdxs);
+    updateImgs();
+  }, 3500);
+
+  setInterval(() => {
+    const pos = 1;
+    showingIdxs[pos] = getRandomIdx(showingIdxs);
+    updateImgs();
+  }, 4500);
+
+  setInterval(() => {
+    const pos = 2;
+    showingIdxs[pos] = getRandomIdx(showingIdxs);
+    updateImgs();
+  }, 4000);
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyYW3pZ8EbhaKN2BSrVLZyzs4tF-JpycOyHbWMf9-ODmHm9lctu0h81FgvhtvPALS_x/exec';
+  
+  
+  // Lưu form HTML gốc
+  const originalFormHTML = document.querySelector('.form-bg-wrapper').innerHTML;
+  
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    
+    // Hiển thị loading
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Đang gửi...';
+    submitBtn.disabled = true;
+    
+    // Tạo FormData từ form
+    const formData = new FormData(form);
+    
+    // Thêm timestamp để tránh cache
+    formData.append('timestamp', new Date().getTime());
+    
+    fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    })
+    .then(response => {
+      console.log('Response status:', response.status);
+      
+      // Ẩn form và hiển thị lời cảm ơn
+      const formWrapper = document.querySelector('.form-bg-wrapper');
+      const thankYouMessage = document.createElement('div');
+      thankYouMessage.innerHTML = `
+        <div style="
+          text-align: center;
+          padding: 2em;
+          color: #6b3a1c;
+          font-family: 'Merriweather', serif;
+          font-size: 1.2em;
+          line-height: 1.6;
+          background: rgba(255,255,255,0.9);
+          border-radius: 20px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+          animation: fadeIn 0.5s ease-in;
+        ">
+          <div style="font-size: 3em; margin-bottom: 0.5em;">💕</div>
+          <div style="font-weight: bold; margin-bottom: 1em;">Cảm ơn bạn đã dành thời gian gửi lời chúc cho cả 2</div>
+          <div style="font-size: 0.9em; opacity: 0.8;">Chúng mình rất trân trọng tình cảm của bạn!</div>
+        </div>
+      `;
+      
+      // Thay thế form bằng lời cảm ơn
+      formWrapper.innerHTML = '';
+      formWrapper.appendChild(thankYouMessage);
+      
+      // Reset form (ẩn)
+      form.reset();
+      
+      // Sau 5 giây, khôi phục lại form
+      setTimeout(() => {
+        formWrapper.innerHTML = originalFormHTML;
+        // Khôi phục event listener cho form mới
+        document.getElementById('rsvpForm').addEventListener('submit', handleFormSubmit);
+      }, 5000);
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+      document.getElementById('formResult').innerText = 'Có lỗi xảy ra, vui lòng thử lại.';
+    })
+    .finally(() => {
+      // Khôi phục button
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    });
+  }
+  
+  document.getElementById('rsvpForm').addEventListener('submit', handleFormSubmit);
+  </script>
+</body>
+</html>
