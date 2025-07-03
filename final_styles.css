@@ -918,3 +918,14 @@ html, body {
     gap: 4px;
   }
 }
+
+/* New classes for effect-hidden and effect-visible */
+.effect-hidden {
+  opacity: 0 !important;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.7s cubic-bezier(0.4,0.2,0.2,1), transform 0.7s cubic-bezier(0.4,0.2,0.2,1);
+}
+.effect-visible {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1);
+}

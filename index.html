@@ -107,6 +107,9 @@
       }
     }
 
+    @media (min-width: 769px) {
+    }
+
     @media (max-width: 480px) {
       .form-bg-container {
         width: 98vw !important;
@@ -398,12 +401,39 @@
       font-weight: 600 !important;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
+
+    .land2-date-top {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 90%;
+      height: auto;
+      object-fit: contain;
+      z-index: 2;
+      margin: 0 auto;
+      display: block;
+    }
+    .land2-place-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 90%;
+      height: auto;
+      object-fit: contain;
+      z-index: 2;
+      margin: 0 auto;
+      display: block;
+    }
   </style>
 </head>
 <body>
   <!-- Block Top -->
   <div class="wedding-block top-block">
-    <img src="assets/images/wedding/element.png" alt="Top Decoration" class="element" />
+    <img src="assets/images/wedding/element.png" alt="Top Decoration" class="element fade-in-img" />
   </div>
 
   <!-- Block Body -->
@@ -508,13 +538,13 @@
   <!-- Land2 End Block -->
   <div class="wedding-block land2-end-block">
     <div class="land2-content">
-      <img src="assets/images/wedding/land2-text_save.png" alt="Save Text" class="land2-save" />
-      <div class="carousel-container multi">
+      <img src="assets/images/wedding/land2-text_save.png" alt="Save Text" class="land2-save fade-in-img" />
+      <div class="carousel-container multi fade-in-img">
         <img class="carousel-img multi" src="assets/images/Save_date/WL1156.jpg" alt="Ảnh Save Date" />
         <img class="carousel-img multi" src="assets/images/Save_date/WL1145.jpg" alt="Ảnh Save Date" />
         <img class="carousel-img multi" src="assets/images/Save_date/WL1006.jpg" alt="Ảnh Save Date" />
       </div>
-      <img src="assets/images/wedding/land2-text_tkyou.png" alt="Thank You Text" class="land2-thankyou" />
+      <img src="assets/images/wedding/land2-text_tkyou.png" alt="Thank You Text" class="land2-thankyou fade-in-img" />
     </div>
   </div>
 
@@ -585,30 +615,61 @@
   document.addEventListener('click', handleHeartPop);
   document.addEventListener('touchstart', handleHeartPop);
 
-  // Hiệu ứng xuất hiện khi scroll đến ảnh
+  // Hiệu ứng tuần tự cho element và thiệp mời
   document.addEventListener('DOMContentLoaded', function() {
-    const fadeImgs = document.querySelectorAll('.fade-in-img');
+    const bodyBlock = document.querySelector('.body-block');
+    const invitations = document.querySelectorAll('.invitation.fade-in-img');
+    let hasRun = false; // Đánh dấu đã chạy hiệu ứng tuần tự
+
+    invitations.forEach(inv => inv.classList.remove('visible'));
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasRun) {
+          hasRun = true;
+          let delay = 0;
+          invitations.forEach((inv, idx) => {
+            setTimeout(() => {
+              inv.classList.add('visible');
+            }, delay);
+            delay += 900;
+          });
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    if (bodyBlock) observer.observe(bodyBlock);
+  });
+
+  // Hiệu ứng tuần tự cho element (top-block)
+  document.addEventListener('DOMContentLoaded', function() {
+    const topBlock = document.querySelector('.top-block');
+    const element = document.querySelector('.element.fade-in-img');
+    if (element) element.classList.remove('visible');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          element && element.classList.add('visible');
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    if (topBlock) observer.observe(topBlock);
+  });
+
+  // Hiệu ứng fade-in cho các phần tử khác (trừ .invitation và .element)
+  document.addEventListener('DOMContentLoaded', function() {
+    const fadeImgs = document.querySelectorAll('.fade-in-img:not(.invitation):not(.element)');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
         }
       });
     }, { threshold: 0.2 });
     fadeImgs.forEach(img => observer.observe(img));
-  });
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const slideWrappers = document.querySelectorAll('.slide-in-from-left, .slide-in-from-right');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.01 });
-    slideWrappers.forEach(el => observer.observe(el));
   });
 
   // Carousel Save_date nhiều ảnh
